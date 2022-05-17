@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E> {
 
 	public BinarySearchTree(E data, BinarySearchTree<E> leftTree, BinarySearchTree<E> rightTree) {
@@ -11,11 +13,41 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E> {
 	}
 
 	public boolean lookup(E data) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		if(data.compareTo(this.data) == 0){
+			return true;
+		}
+		else if(data.compareTo(this.data) < 0){
+			if(this.leftTree == null){
+				return false;
+			}
+			return this.leftTree.lookup(data);
+		}
+		else{
+			if(this.rightTree == null){
+				return false;
+			}
+			return this.rightTree.lookup(data);
+		}
 	}
 
 	public boolean addNode(E data) {
-		throw new UnsupportedOperationException("Not yet implemented");
+		if(data.compareTo(this.data) == 0){
+			return false;
+		}
+		else if(data.compareTo(this.data) < 0){
+			if(this.leftTree == null){
+				leftTree = new BinarySearchTree<E>(data);
+				return true;
+			}
+			return this.leftTree.addNode(data);
+		}
+		else {
+			if(this.rightTree == null){
+				rightTree = new BinarySearchTree<E>(data);
+				return true;
+			}
+			return this.rightTree.addNode(data);
+		}
 	}
 
 	public boolean removeNode(E data){
@@ -23,12 +55,38 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E> {
 	}
 
 	public E searchSmallest(){
-		throw new UnsupportedOperationException("Not yet implemented");
+		if(this.leftTree == null) return this.data;
+		else return this.leftTree.searchSmallest();
 	}
 
 	public E searchGreatest(){
-		throw new UnsupportedOperationException("Not yet implemented");
+		if(this.rightTree == null) return this.data;
+		else return this.rightTree.searchGreatest();
 	}
+
+
+	public ArrayList<E> getPath(E data){
+		if(!lookup(data)) return null;
+		else if (this.data.compareTo(data) == 0){
+			ArrayList<E> theList = new ArrayList<>();
+			theList.add(data);
+			return theList;
+		}
+		else if(this.data.compareTo(data) > 0){
+			ArrayList<E> theList = new ArrayList<>();
+			theList.add(this.data);
+			theList.addAll(leftTree.getPath(data));
+			return theList;
+		}
+		else {
+			ArrayList<E> theList = new ArrayList<>();
+			theList.add(this.data);
+			theList.addAll(rightTree.getPath(data));
+			return theList;
+		}
+
+	}
+
 }
 
 
