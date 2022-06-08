@@ -9,24 +9,20 @@ public class Graph {
     public static final int infty = Integer.MAX_VALUE;
 
     public Graph(int[][] matrix) {
-        if (!isGeldigeVerbindingsMatrix(matrix))
-            throw new IllegalArgumentException("No valid verbindingsmatrix");
+        if (!isGeldigeVerbindingsMatrix(matrix)) throw new IllegalArgumentException("No valid verbindingsmatrix");
 
         this.verbindingsMatrix = matrix.clone();
     }
 
     private boolean isGeldigeVerbindingsMatrix(int[][] matrix) {
-        if (matrix == null || matrix.length != matrix[0].length)
-            return false;
+        if (matrix == null || matrix.length != matrix[0].length) return false;
 
         for (int i = 0; i < matrix.length; i++)
-            if (matrix[i][i] != 0)
-                return false;
+            if (matrix[i][i] != 0) return false;
 
         for (int i = 0; i < matrix.length; i++)
             for (int j = 0; j < matrix.length; j++)
-                if (matrix[i][j] != 0 && matrix[i][j] != 1)
-                    return false;
+                if (matrix[i][j] != 0 && matrix[i][j] != 1) return false;
         return true;
     }
 
@@ -64,16 +60,21 @@ public class Graph {
     }
 
     public List<Integer> findPath(int start, int destination) {
-        if (start <= 0 || start > this.getAantalKnopen() || destination <= 0 || destination > this.getAantalKnopen())
+        if (start <= 0 || start > this.getAantalKnopen() || destination <= 0 ||
+                destination > this.getAantalKnopen())
             throw new IllegalArgumentException();
-
         int[] ancestors = this.findAncestors(start, destination);
         List<Integer> path = new LinkedList<>();
-
-        // oefening 1.5
-
+        int ouder = ancestors[destination - 1];
+        while (ouder != 0 && ouder != infty) {
+            path.add(0, destination);;
+            destination = ouder;
+            ouder = ancestors[destination - 1];
+        }
+        if (ouder == 0) {
+            path.add(0,destination);
+        }
         return path;
-
     }
 
     private void initArray(int[] array, int value) {
@@ -87,7 +88,7 @@ public class Graph {
         String res = "Ancestors van " + start + " naar " + destination + ":\n";
         int[] ancestors = this.findAncestors(start, destination);
         for (int a = 0; a < ancestors.length; a++)
-            res += ancestors[a] != infty ? ancestors[a] : "infty" + " ";
+            res += ancestors[a] != infty ? ancestors[a] + " " : "infty" + " ";
 
         return res;
     }
