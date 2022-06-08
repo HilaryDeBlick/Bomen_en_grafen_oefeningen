@@ -6,7 +6,7 @@ public class BinarySearchTreeDriver {
 
 	public static void main(String[] args) {
 
-		//integerTree();
+		integerTree();
 
 //		BinarySearchTree<Integer> boom = new BinarySearchTree<Integer>(5);
 //		boom.addNode(4);
