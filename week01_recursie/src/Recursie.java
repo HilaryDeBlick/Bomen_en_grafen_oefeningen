@@ -71,28 +71,64 @@ public class Recursie {
     // oefening 7
 
     public static String changePi(String s) {
-
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (s == null) throw new IllegalArgumentException("");
+        else if (s.length() <= 1) return s;
+        else {
+            if(s.substring(0,2).equalsIgnoreCase("pi")){
+                return "3.14" + changePi(s.substring(2));
+            }
+            else{
+                return s.charAt(0) + changePi(s.substring(1));
+            }
+        }
     }
 
     // oefening 8:
     public static int tweelog(int getal) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if(getal <= 0) throw new IllegalArgumentException("");
+        else if(getal <= 1) return 0;
+        return 1 + tweelog(getal/2);
     }
 
     // oefening 9;
     public static double findMaximum(List<Double> lijst) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if(lijst == null || lijst.size() == 0) throw new IllegalArgumentException("");
+        else if (lijst.size() == 1) return lijst.get(0);
+        else{
+            double n = findMaximum(lijst.subList(1,lijst.size()));
+            if(lijst.get(0) > n){
+                return lijst.get(0);
+            }
+            else{
+                return n;
+            }
+        }
     }
 
     // oefening 10;
     public static ArrayList<String> findSubstrings(String string) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if(string == null) throw new IllegalArgumentException("");
+        ArrayList<String> result = new ArrayList<>();
+        if(string.length() <= 1){
+            result.add(string);
+            return result;
+        }
+        else{
+            result.add(string.substring(0,1));
+        ArrayList<String> temp = findSubstrings(string.substring(1));
+        result.addAll(temp);
+        for (String s : temp) {
+            result.add(string.charAt(0) + s);
+        }
+        return result;
+        }
     }
 
     // oefening 11;
     public static int aantalKaarten(int n){
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (n <= 0) throw new IllegalArgumentException("");
+        else if (n == 1) return 2;
+        return aantalKaarten(n-1) + (n-1) + 2 * n;
     }
 
 }

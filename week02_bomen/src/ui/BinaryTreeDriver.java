@@ -2,9 +2,11 @@ package ui;
 
 import domain.BinaryTree;
 
+import java.sql.SQLOutput;
+
 public class BinaryTreeDriver {
 
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		BinaryTree<String> nodeD = new BinaryTree<>("D");
 //		BinaryTree<String> nodeF = new BinaryTree<>("F");
 //		BinaryTree<String> nodeB = new BinaryTree<>("B");
@@ -20,6 +22,9 @@ public class BinaryTreeDriver {
 //		// boom heeft root C en heeft links A en rechts G
 //		BinaryTree<String> boom = new BinaryTree<>("C",nodeA, nodeG);
 //		boom.printPreorder();
+//	}
+
+	public static void main(String[] args) {
 
 		// oef 2.2 f
 		BinaryTree<String> nodeA = new BinaryTree<>("A");
@@ -51,6 +56,13 @@ public class BinaryTreeDriver {
 		//System.out.println(nodeI.getDepth());
 		System.out.println(boom.isLeaf());
 		System.out.println(nodeE.isLeaf());
+		System.out.println(boom.countLeaves());
+		System.out.println(boom.getDataLeaves());
+
+		System.out.println(boom.contains("D"));
+		System.out.println(boom.contains("H"));
+		System.out.println(boom.contains("F"));
+		System.out.println(boom.contains("Q"));
 	}
 
 }

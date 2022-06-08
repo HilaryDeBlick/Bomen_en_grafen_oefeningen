@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class BinaryTree<E> {
 	private E data;
 	private BinaryTree<E> leftTree, rightTree;
@@ -35,22 +37,67 @@ public class BinaryTree<E> {
 		System.out.print(this.data + " ");
 	}
 
+//	public int countNodes(){
+//		if(this.leftTree == null && this.rightTree == null) return 1;
+//		else if(this.leftTree != null && this.rightTree == null) return 1 + this.leftTree.countNodes();
+//		else if(this.leftTree == null) return 1 + this.rightTree.countNodes();
+//		else return 1 + this.leftTree.countNodes() + this.rightTree.countNodes();
+//	}
+
+	//simplified
 	public int countNodes(){
-		if(this.leftTree == null && this.rightTree == null) return 1;
-		else if(this.leftTree != null && this.rightTree == null) return 1 + this.leftTree.countNodes();
-		else if(this.leftTree == null) return 1 + this.rightTree.countNodes();
-		else return 1 + this.leftTree.countNodes() + this.rightTree.countNodes();
+		return 1 + (this.leftTree == null ? 0 : this.leftTree.countNodes())
+				 + (this.rightTree == null ? 0 : this.rightTree.countNodes());
 	}
 
+//	public int getDepth(){
+//		if(this.leftTree == null && this.rightTree == null) return 1;
+//		else if(this.leftTree != null && this.rightTree == null) return 1 + this.leftTree.getDepth();
+//		else if(this.leftTree == null) return 1 + this.rightTree.getDepth();
+//		else return Math.max(1 + this.leftTree.getDepth(),1 + this.rightTree.getDepth());
+//	}
+
+	//simplified
 	public int getDepth(){
-		if(this.leftTree == null && this.rightTree == null) return 1;
-		else if(this.leftTree != null && this.rightTree == null) return 1 + this.leftTree.getDepth();
-		else if(this.leftTree == null) return 1 + this.rightTree.getDepth();
-		else return Math.max(1 + this.leftTree.getDepth(),1 + this.rightTree.getDepth());
+		return 1 + Math.max((this.leftTree == null ? 0 : this.leftTree.getDepth()),
+				(this.rightTree == null ? 0 : this.rightTree.getDepth()));
 	}
 
 	public boolean isLeaf(){
 		return this.leftTree == null && this.rightTree == null;
 	}
 
+	public int countLeaves(){
+		if (this.isLeaf()){
+			return 1;
+		}else{
+			return (this.leftTree == null ? 0 : this.leftTree.countLeaves()) +
+					(this.rightTree == null ? 0 : this.rightTree.countLeaves());
+		}
+	}
+
+	public ArrayList<E> getDataLeaves(){
+		ArrayList<E> result = new ArrayList<>();
+		if(this.isLeaf()){
+			result.add(this.data);
+		}else{
+			result = (this.leftTree == null ? new ArrayList<>() : this.leftTree.getDataLeaves());
+			ArrayList<E> righLeaves = (this.rightTree == null ? new ArrayList<>() : this.rightTree.getDataLeaves());
+			result.addAll(righLeaves);
+		}
+
+		return result;
+	}
+
+	public boolean contains(E s){
+		if (s == null){
+			return false;
+		}else{
+			if(s.equals(this.data)){
+				return true;
+			}else{
+				return (this.leftTree != null && this.leftTree.contains(s)) || (this.rightTree != null && this.rightTree.contains(s));
+			}
+		}
+	}
 }
